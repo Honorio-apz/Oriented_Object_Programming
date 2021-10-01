@@ -17,15 +17,16 @@ public class Librov2 {
     public static void main(String[] args) {
         // TODO code application logic here
         //primer objeto
-        Libro_class_met Computer_Science = new Libro_class_met(2012,"Computer Science", "Honorio Apaza", 67456875);
+        //int dni, String nombre, String apellidos, int codigo, String titulo_lib, int pag_lib
+        Libro_class_met Computer_Science = new Libro_class_met(4872364, "Honorio", "Apaza",2012,"Computer Science", 67456875);
         System.out.println(Computer_Science.Imprimir());
         
         //uso de metodo set
-        Computer_Science.setAutor("Rene Mamani");
-        System.out.println(Computer_Science.Imprimir());
+        //Computer_Science.this.setNombre("Rene Mamani");
+        //System.out.println(Computer_Science.Imprimir());
         
         //regundo objeto
-        Libro_class_met System_recommendation = new Libro_class_met(2012,"System Recommedation", "Honorio Apaza", 435);
+        Libro_class_met System_recommendation = new Libro_class_met(78363, "Pedro","Castillo", 2012,"System Recommedation", 435);
         System.out.println(System_recommendation.Imprimir());
         
         //uso de metodo get

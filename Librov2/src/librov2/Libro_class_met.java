@@ -9,21 +9,21 @@ package librov2;
  *
  * @author honorio
  */
-public class Libro_class_met {
+public class Libro_class_met extends Autor_class {
 
     //ATRIBUTOS DE LA CLASE LIBRO
     private int ISBN;
     private String titulo;
-    private String autor;
     private int Num_pag;
-
-    //CONSTRUCTORES
-    public Libro_class_met(int codigo, String titulo_lib, String autor_lib, int pag_lib) {
+    
+    public Libro_class_met( int dni, String nombre, String apellidos, int codigo, String titulo_lib, int pag_lib){
+        super(dni, nombre, apellidos);
         ISBN = codigo;
         titulo = titulo_lib;
-        autor = autor_lib;
         Num_pag = pag_lib;
     }
+
+    //CONSTRUCTORES
     
     //METODOS GET
     
@@ -35,9 +35,6 @@ public class Libro_class_met {
         return titulo;
     }
 
-    public String getAutor() {
-        return autor;
-    }
 
     
     public int getNum_pag() {    
@@ -54,9 +51,7 @@ public class Libro_class_met {
         this.titulo = titulo;
     }
 
-    public void setAutor(String autor) {
-        this.autor = autor;
-    }
+   
 
     public void setNum_pag(int Num_pag) {
         this.Num_pag = Num_pag;
@@ -65,7 +60,7 @@ public class Libro_class_met {
     
     
     public String Imprimir() {
-        return "El nombre del objeto es "+titulo+" y el autor es : "+autor+" y tiene: "+Num_pag+" de paginas";
+        return "El nombre del objeto es "+titulo+" y el autor es : "+this.getNombre()+this.getApellidos()+" y tiene: "+Num_pag+" de paginas";
     }
 
 }
