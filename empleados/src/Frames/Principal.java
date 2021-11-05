@@ -5,6 +5,13 @@
  */
 package Frames;
 
+import Clases.Conectar;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author Honorio
@@ -16,8 +23,56 @@ public class Principal extends javax.swing.JFrame {
      */
     public Principal() {
         initComponents();
+        this.setLocationRelativeTo(this);
+        
+        limpiar();
+        mostrardatos("");
+        txtid.setEnabled(false);
     }
-
+    void limpiar(){
+        txtid.setText("");
+        txtnombre.setText("");
+        txtapellidos.setText("");
+        txtdireccion.setText("");
+        txtemail.setText("");
+    }
+    void mostrardatos(String valor){
+        DefaultTableModel modelo = new DefaultTableModel();
+        modelo.addColumn("ID");
+        modelo.addColumn("NOMBRE");
+        modelo.addColumn("APELLIDOS");
+        modelo.addColumn("DIRECCION");
+        modelo.addColumn("EMAIL");
+        tabla.setModel(modelo);
+        
+        String sql="SELECT * FROM empleados.usuario WHERE CONCAT (nombre,' ', apellidos) LIKE '%"+valor+"%'";
+        
+        String datos[]=new String[5];
+        Statement st;
+        try {
+            
+            st=cn.createStatement();
+            ResultSet rs=st.executeQuery(sql);
+            
+            while (rs.next()){
+                datos[0]=rs.getString(1);
+                datos[1]=rs.getString(2);
+                datos[2]=rs.getString(3);
+                datos[3]=rs.getString(4);
+                datos[4]=rs.getString(5);
+                
+                modelo.addRow(datos);
+                
+            }
+            tabla.setModel(modelo);
+        }catch (Exception e){
+            System.err.println("Error en el mostrar");
+            JOptionPane.showMessageDialog(null, "Error en mostrad datos en la tabla");
+        }
+        
+        
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -45,7 +100,7 @@ public class Principal extends javax.swing.JFrame {
         btncancelar = new javax.swing.JToggleButton();
         btneliminar = new javax.swing.JToggleButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tabla = new javax.swing.JTable();
         btnimprimir = new javax.swing.JToggleButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -66,6 +121,11 @@ public class Principal extends javax.swing.JFrame {
         jLabel6.setText("Email:");
 
         btnguardar.setText("Guardar");
+        btnguardar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnguardarActionPerformed(evt);
+            }
+        });
 
         btnactualizar.setText("Actualizar");
         btnactualizar.addActionListener(new java.awt.event.ActionListener() {
@@ -142,7 +202,7 @@ public class Principal extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tabla.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -153,7 +213,7 @@ public class Principal extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(tabla);
 
         btnimprimir.setText("Imprimir");
         btnimprimir.addActionListener(new java.awt.event.ActionListener() {
@@ -215,6 +275,11 @@ public class Principal extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_btnimprimirActionPerformed
 
+    private void btnguardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnguardarActionPerformed
+        // TODO add your handling code here:
+        limpiar();
+    }//GEN-LAST:event_btnguardarActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -265,11 +330,14 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JTable tabla;
     private javax.swing.JTextField txtapellidos;
     private javax.swing.JTextField txtdireccion;
     private javax.swing.JTextField txtemail;
     private javax.swing.JTextField txtid;
     private javax.swing.JTextField txtnombre;
     // End of variables declaration//GEN-END:variables
+
+    Conectar con=new Conectar();
+    Connection cn = con.conexion();
 }
