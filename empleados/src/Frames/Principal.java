@@ -7,6 +7,7 @@ package Frames;
 
 import Clases.Conectar;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import javax.swing.JOptionPane;
@@ -50,27 +51,21 @@ public class Principal extends javax.swing.JFrame {
         String datos[]=new String[5];
         Statement st;
         try {
-            
             st=cn.createStatement();
             ResultSet rs=st.executeQuery(sql);
-            
             while (rs.next()){
                 datos[0]=rs.getString(1);
                 datos[1]=rs.getString(2);
                 datos[2]=rs.getString(3);
                 datos[3]=rs.getString(4);
                 datos[4]=rs.getString(5);
-                
                 modelo.addRow(datos);
-                
             }
             tabla.setModel(modelo);
         }catch (Exception e){
             System.err.println("Error en el mostrar");
             JOptionPane.showMessageDialog(null, "Error en mostrad datos en la tabla");
         }
-        
-        
     }
     
     /**
@@ -277,7 +272,22 @@ public class Principal extends javax.swing.JFrame {
 
     private void btnguardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnguardarActionPerformed
         // TODO add your handling code here:
-        limpiar();
+        
+        try { 
+            PreparedStatement ps = cn.prepareStatement("INSERT INTO empleados.usuario (nombre, apellidos, direccion, email) VALUES (?,?,?,?)");
+            ps.setString(1, txtnombre.getText());
+            ps.setString(2, txtapellidos.getText());
+            ps.setString(3, txtdireccion.getText());
+            ps.setString(4, txtemail.getText());
+            
+            ps.executeUpdate();
+            limpiar();
+            mostrardatos("");
+        }catch (Exception e){
+            System.err.println("Error en insertar");
+            JOptionPane.showMessageDialog(null, "Error en insertar datos");
+        }
+        
     }//GEN-LAST:event_btnguardarActionPerformed
 
     /**
