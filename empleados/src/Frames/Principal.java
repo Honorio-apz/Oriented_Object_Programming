@@ -208,6 +208,11 @@ public class Principal extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        tabla.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tablaMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(tabla);
 
         btnimprimir.setText("Imprimir");
@@ -264,6 +269,24 @@ public class Principal extends javax.swing.JFrame {
 
     private void btnactualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnactualizarActionPerformed
         // TODO add your handling code here:
+        try { 
+            PreparedStatement ps = cn.prepareStatement("UPDATE empleados.usuario SET nombre='"+txtnombre.getText()+"',apellidos='"+txtapellidos.getText()+"',direccion='"+txtdireccion.getText()+"',email='"+txtemail.getText()+"'");
+            
+            int r= ps.executeUpdate();
+            if (r>0){
+                JOptionPane.showMessageDialog(null, "Datos actualizados");
+                limpiar();
+                mostrardatos("");
+            }
+            else{
+                JOptionPane.showMessageDialog(null, "No se ha seleccionado ningun registro");
+            }
+           
+            
+        }catch (Exception e){
+            System.err.println("Error en actualizaar");
+            JOptionPane.showMessageDialog(null, "Error en actualizar datos");
+        }
     }//GEN-LAST:event_btnactualizarActionPerformed
 
     private void btnimprimirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnimprimirActionPerformed
@@ -289,6 +312,16 @@ public class Principal extends javax.swing.JFrame {
         }
         
     }//GEN-LAST:event_btnguardarActionPerformed
+
+    private void tablaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaMouseClicked
+        // TODO add your handling code here:
+        int fila = this.tabla.getSelectedRow();
+        this.txtid.setText(this.tabla.getValueAt(fila, 0).toString());
+        this.txtnombre.setText(this.tabla.getValueAt(fila, 1).toString());
+        this.txtapellidos.setText(this.tabla.getValueAt(fila, 2).toString());
+        this.txtdireccion.setText(this.tabla.getValueAt(fila, 3).toString());
+        this.txtemail.setText(this.tabla.getValueAt(fila, 4).toString());
+    }//GEN-LAST:event_tablaMouseClicked
 
     /**
      * @param args the command line arguments
