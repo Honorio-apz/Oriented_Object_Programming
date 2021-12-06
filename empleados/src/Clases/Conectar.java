@@ -9,7 +9,7 @@ public class Conectar {
     public Connection conexion(){
         try {
             Class.forName("com.mysql.jdbc.Driver");
-            cn=DriverManager.getConnection("jdbc:mysql://localhost:3306/empleados","Honorio","1234");
+            cn=DriverManager.getConnection("jdbc:mysql://localhost:3306/empleados","root","assasins123");
             System.out.println("Conexion existosa");
         }catch (Exception e){
             JOptionPane.showMessageDialog(null, "No se pudo conectar a base de  datos");
