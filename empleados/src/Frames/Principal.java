@@ -77,6 +77,8 @@ public class Principal extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jPopupMenu1 = new javax.swing.JPopupMenu();
+        popeliminar = new javax.swing.JMenuItem();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
@@ -97,6 +99,14 @@ public class Principal extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         tabla = new javax.swing.JTable();
         btnimprimir = new javax.swing.JToggleButton();
+
+        popeliminar.setText("Eliminar registro");
+        popeliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                popeliminarActionPerformed(evt);
+            }
+        });
+        jPopupMenu1.add(popeliminar);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -208,6 +218,7 @@ public class Principal extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        tabla.setComponentPopupMenu(jPopupMenu1);
         tabla.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 tablaMouseClicked(evt);
@@ -270,7 +281,7 @@ public class Principal extends javax.swing.JFrame {
     private void btnactualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnactualizarActionPerformed
         // TODO add your handling code here:
         try { 
-            PreparedStatement ps = cn.prepareStatement("UPDATE empleados.usuario SET nombre='"+txtnombre.getText()+"',apellidos='"+txtapellidos.getText()+"',direccion='"+txtdireccion.getText()+"',email='"+txtemail.getText()+"'");
+            PreparedStatement ps = cn.prepareStatement("UPDATE empleados.usuario SET nombre='"+txtnombre.getText()+"',apellidos='"+txtapellidos.getText()+"',direccion='"+txtdireccion.getText()+"',email='"+txtemail.getText()+"'WHERE idusuario='"+txtid.getText()+"'");
             
             int r= ps.executeUpdate();
             if (r>0){
@@ -323,6 +334,29 @@ public class Principal extends javax.swing.JFrame {
         this.txtemail.setText(this.tabla.getValueAt(fila, 4).toString());
     }//GEN-LAST:event_tablaMouseClicked
 
+    private void popeliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_popeliminarActionPerformed
+        // TODO add your handling code here:
+        try { 
+            PreparedStatement ps = cn.prepareStatement("DELETE FROM empleados.usuario WHERE idusuario='"+txtid.getText()+"'");
+            
+            int r= ps.executeUpdate();
+            if (r>0){
+                JOptionPane.showMessageDialog(null, "Datos eliminados");
+                limpiar();
+                mostrardatos("");
+            }
+            else{
+                JOptionPane.showMessageDialog(null, "No se ha seleccionado ningun registro");
+            }
+           
+            
+        }catch (Exception e){
+            System.err.println("Error en eliminar");
+            JOptionPane.showMessageDialog(null, "Error en eliminar datos");
+        }
+        
+    }//GEN-LAST:event_popeliminarActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -372,7 +406,9 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JPopupMenu jPopupMenu1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JMenuItem popeliminar;
     private javax.swing.JTable tabla;
     private javax.swing.JTextField txtapellidos;
     private javax.swing.JTextField txtdireccion;
