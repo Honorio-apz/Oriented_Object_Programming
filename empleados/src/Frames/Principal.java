@@ -281,7 +281,11 @@ public class Principal extends javax.swing.JFrame {
     private void btnactualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnactualizarActionPerformed
         // TODO add your handling code here:
         try { 
+<<<<<<< HEAD
             PreparedStatement ps = cn.prepareStatement("UPDATE empleados.usuario SET nombre='"+txtnombre.getText()+"',apellidos='"+txtapellidos.getText()+"',direccion='"+txtdireccion.getText()+"',email='"+txtemail.getText()+"'WHERE idusuario='"+txtid.getText()+"'");
+=======
+            PreparedStatement ps = cn.prepareStatement("UPDATE empleados.usuario SET nombre='"+txtnombre.getText()+"',apellidos='"+txtapellidos.getText()+"',direccion='"+txtdireccion.getText()+"',email='"+txtemail.getText()+"' WHERE idusuario='"+txtid.getText()+"'");
+>>>>>>> fd612fcb27ef404dc90d79249b034a0645b98732
             
             int r= ps.executeUpdate();
             if (r>0){
